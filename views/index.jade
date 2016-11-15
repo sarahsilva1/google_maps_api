@@ -1,0 +1,202 @@
+doctype transitional
+html
+  head
+    title Oh, the Places I'll Go!
+    script(src='http://code.jquery.com/jquery.min.js', type='text/javascript')
+    meta(name='viewport', content='initial-scale=1.0, user-scalable=no')
+    meta(charset='utf-8')
+    style.
+      #map {
+      margin-left: 10%;
+      margin-right: 10%;
+      padding: 20px;
+      }
+      html, body {
+      height: 80%;
+      margin: 0;
+      padding: 20px;
+      }
+  body
+    h1 Oh, the Places I'll Go!
+    script(type='text/javascript', src='http://maps.google.com/maps/api/js?sensor=false')
+    script(type='text/javascript').
+      var infowindow = null;
+      $(document).ready(function () { initialize();  });
+      function initialize() {
+      var centerMap = new google.maps.LatLng(40.071, -45.287);
+      var myOptions = {
+      zoom: 3,
+      styles: [
+          {
+              "elementType": "geometry",
+              "stylers": [
+                  {
+                      "hue": "#ff4400"
+                  },
+                  {
+                      "saturation": -68
+                  },
+                  {
+                      "lightness": -4
+                  },
+                  {
+                      "gamma": 0.72
+                  }
+              ]
+          },
+          {
+              "featureType": "road",
+              "elementType": "labels.icon"
+          },
+          {
+              "featureType": "landscape.man_made",
+              "elementType": "geometry",
+              "stylers": [
+                  {
+                      "hue": "#0077ff"
+                  },
+                  {
+                      "gamma": 3.1
+                  }
+              ]
+          },
+          {
+              "featureType": "water",
+              "stylers": [
+                  {
+                      "hue": "#00ccff"
+                  },
+                  {
+                      "gamma": 0.44
+                  },
+                  {
+                      "saturation": -33
+                  }
+              ]
+          },
+          {
+              "featureType": "poi.park",
+              "stylers": [
+                  {
+                      "hue": "#44ff00"
+                  },
+                  {
+                      "saturation": -23
+                  }
+              ]
+          },
+          {
+              "featureType": "water",
+              "elementType": "labels.text.fill",
+              "stylers": [
+                  {
+                      "hue": "#007fff"
+                  },
+                  {
+                      "gamma": 0.77
+                  },
+                  {
+                      "saturation": 65
+                  },
+                  {
+                      "lightness": 99
+                  }
+              ]
+          },
+          {
+              "featureType": "water",
+              "elementType": "labels.text.stroke",
+              "stylers": [
+                  {
+                      "gamma": 0.11
+                  },
+                  {
+                      "weight": 5.6
+                  },
+                  {
+                      "saturation": 99
+                  },
+                  {
+                      "hue": "#0091ff"
+                  },
+                  {
+                      "lightness": -86
+                  }
+              ]
+          },
+          {
+              "featureType": "transit.line",
+              "elementType": "geometry",
+              "stylers": [
+                  {
+                      "lightness": -48
+                  },
+                  {
+                      "hue": "#ff5e00"
+                  },
+                  {
+                      "gamma": 1.2
+                  },
+                  {
+                      "saturation": -23
+                  }
+              ]
+          },
+          {
+              "featureType": "transit",
+              "elementType": "labels.text.stroke",
+              "stylers": [
+                  {
+                      "saturation": -64
+                  },
+                  {
+                      "hue": "#ff9100"
+                  },
+                  {
+                      "lightness": 16
+                  },
+                  {
+                      "gamma": 0.47
+                  },
+                  {
+                      "weight": 2.7
+                  }
+              ]
+          }
+      ],
+      center: centerMap,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+      }
+      var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+      setMarkers(map, sites);
+      infowindow = new google.maps.InfoWindow({
+      content: "loading..."
+      });
+      var bikeLayer = new google.maps.BicyclingLayer();
+      bikeLayer.setMap(map);
+      }
+      var sites = [
+      ['Havana, Cuba',23.097, -82.352, 1, 'I want to go to Havana.'],
+      ['London, U.K.', 51.530, -0.130, 2, 'I want to go to London.'],
+      ['Belize City, Belize', 17.492, -88.213, 3, 'I want to go to Belize'],
+      ['Florence, Italy', 47.773, 11.239, 4, 'I want to go to Florence']
+      ];
+      function setMarkers(map, markers) {
+      for (var i = 0; i < markers.length; i++) {
+      var sites = markers[i];
+      var siteLatLng = new google.maps.LatLng(sites[1], sites[2]);
+      var marker = new google.maps.Marker({
+      position: siteLatLng,
+      map: map,
+      title: sites[0],
+      zIndex: sites[3],
+      html: sites[4]
+      });
+      google.maps.event.addListener(marker, "click", function () {
+      //- alert(this.html);
+      infowindow.setContent(this.html);
+      infowindow.open(map, this);
+      });
+      }
+      }
+    #map_canvas(style='width: 80%; height: 70%;')

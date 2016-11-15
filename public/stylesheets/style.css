@@ -1,0 +1,24 @@
+body {
+  padding: 50px;
+  margin-left: 10px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+h1 {
+  color: red;
+  font: 30px;
+}
+
+#title {
+  color: red !important;
+  font: 30px;
+}
+
+.h1 {
+  color: red;
+  font: 30px;
+}
